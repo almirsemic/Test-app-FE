@@ -65,13 +65,13 @@ export default {
   },
   async created() {
     axios.get("api/students/").then((data) => {
-      for (let i in data.data) {
-        axios.get(`api/students/${data.data[i].id}/courses/`).then((res) => {
-          data.data[i].courses = res.data;
-          data.data[i].status == 'pt' ? 
-          data.data[i].status = 'Part Time' :
-          data.data[i].status = 'Full Time';
-          this.items.push(data.data[i])
+      for (let item of data.data) {
+        axios.get(`api/students/${item.id}/courses/`).then((res) => {
+          item.courses = res.data;
+          item.status == 'pt' ? 
+          item.status = 'Part Time' :
+          item.status = 'Full Time'
+          this.items.push(item);
         })
       }
     })
