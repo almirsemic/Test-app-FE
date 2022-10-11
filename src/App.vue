@@ -68,10 +68,10 @@ export default {
       for (let i in data.data) {
         axios.get(`api/students/${data.data[i].id}/courses/`).then((res) => {
           data.data[i].courses = res.data;
+          data.data[i].status == 'pt' ? 
+          data.data[i].status = 'Part Time' :
+          data.data[i].status = 'Full Time';
           this.items.push(data.data[i])
-          this.items[i].status == 'pt' ? 
-          this.items[i].status = 'Part Time' :
-          this.items[i].status = 'Full Time'
         })
       }
     })

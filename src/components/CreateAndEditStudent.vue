@@ -68,13 +68,16 @@ export default {
       }
       if (this.title == 'Edit Student') {
         axios.put(`api/students/${this.id}/`, this.form).then((data) => {
-          const index = this.students.findIndex(student => student.id === data.data.id);
-          this.students.splice(index, 1, data.data);
-          for (let i in this.students) {
+          axios.get(`api/students/${data.data.id}/courses/`).then((res) => {
+            data.data.courses = res.data;
+            const index = this.students.findIndex(student => student.id === data.data.id);
+            this.students.splice(index, 1, data.data);
+            for (let i in this.students) {
             this.students[i].status == 'pt' ?
               this.students[i].status = 'Part Time' :
               this.students[i].status = 'Full Time'
           }
+          });
         })
         this.$bvModal.hide("modal-1")
       }
